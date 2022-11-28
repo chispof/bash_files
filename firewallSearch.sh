@@ -27,10 +27,10 @@ function actualiza(){
         curl -s -X GET "https://$ipFW/restapi/v10.1/Policies/SecurityRules?location=vsys&vsys=vsys1" --insecure -H "X-PAN-KEY: $myKey" | jq -r '.result.entry[] | select((.action=="allow") and  (.disabled!="yes")) | { nombre: .["@name"], fuente: .source.member[], destino: .destination.member[] } | join(";")' > resumenFW.txt
 
         echo -e "${greenColor}[+]${endColor} ${grayColor}Actualizando objetos...${endColor}"
-        curl -s -X GET "https://$ipFW/restapi/v10.1/Objects/Addresses?location=panorama-pushed&vsys=vsys1" --insecure -H 'X-PAN-KEY: '$myKey| jq -r '.result.entry[] | {nombre: .["@name"], ip: ."ip-netmask"} | join(";")' > direccionesFW.txt
+        curl -s -X GET "https://$ipFW/restapi/v10.1/Objects/Addresses?location=panorama-pushed&vsys=vsys1" --insecure -H "X-PAN-KEY: $myKey" | jq -r '.result.entry[] | {nombre: .["@name"], ip: ."ip-netmask"} | join(";")' > direccionesFW.txt
 
         echo -e "${greenColor}[+]${endColor} ${grayColor}Actualizando grupos...${endColor}"
-        curl -s -X GET "https://$ipFW/restapi/v10.1/Objects/AddressGroups?location=panorama-pushed&vsys=vsys1" --insecure -H 'X-PAN-KEY: '$myKey |  jq -r '.result.entry[] | {nombre: .["@name"], ip: .static.member[]} | join(";")' > gruposFW.txt
+        curl -s -X GET "https://$ipFW/restapi/v10.1/Objects/AddressGroups?location=panorama-pushed&vsys=vsys1" --insecure -H "X-PAN-KEY: $myKey" |  jq -r '.result.entry[] | {nombre: .["@name"], ip: .static.member[]} | join(";")' > gruposFW.txt
 }
 
 function helpPanel(){
