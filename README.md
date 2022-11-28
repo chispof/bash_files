@@ -1,4 +1,4 @@
-# bash_files
+# firewallSearch
 Scripts for Palo Alto Firewall management
 
 chmod +x firewallSearch.sh
